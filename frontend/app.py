@@ -48,7 +48,8 @@ if st.button("Predict", type='primary'):
 
     if response.status_code == 200:
         result = response.json()
-        predicted_sales = result["Sales"]
+        raw_sales = result["Sales"]
+        predicted_sales = max(raw_sales, 0.0)
         st.success(f"Predicted Product Store Sales Total: ₹{predicted_sales:.2f}")
     else:
         st.error("Unable to connect to the prediction API.")
@@ -87,6 +88,11 @@ if uploaded_file is not None:
                 else:
                     df = pd.DataFrame({"Result": [results]})
 
+                st.dataframe(df, use_container_width=True)
+
+                if "Sales" in df.columns:
+                    df["Sales"] = df["Sales"].apply(lambda x: max(x, 0.0))
+                
                 st.dataframe(df, use_container_width=True)
 
             except Exception as e:
