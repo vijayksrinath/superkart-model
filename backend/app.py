@@ -40,7 +40,7 @@ def predict_sales():
     input_data = pd.DataFrame([sample])
 
     # Make a prediction using the trained model
-    prediction = model.predict(input_data).tolist()[0]
+    prediction = max(model.predict(input_data).tolist()[0],0.0)
 
     # Return the prediction as a JSON response
     return jsonify({'Sales': prediction})
