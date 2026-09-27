@@ -92,7 +92,7 @@ if uploaded_file is not None:
 
                 if "Sales" in df.columns:
                     df["Sales"] = df["Sales"].apply(lambda x: max(x, 0.0))
-                
+
                 st.dataframe(df, use_container_width=True)
 
             except Exception as e:
